@@ -1,0 +1,18 @@
+[project]
+name = "qnca"
+version = "0.0.1"
+authors = [
+  { name="Petrônio Cândido de Lima e Silva", email="petronio.candido@ifnmg.edu.br" }
+]
+description = "Quantum Neural Cellular Automata"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/petroniocandido/QNCA/"
+Issues = "https://github.com/petroniocandido/QNCA/issues"
