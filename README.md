@@ -1,2 +1,2 @@
-# QNGCA
+# QNCA
 Quantum Neural Cellular Automata
