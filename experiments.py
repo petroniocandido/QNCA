@@ -1,6 +1,6 @@
 from qnca import qnca
 from qnca import ca_patterns
-from qnca.optimizers import base, cobyla
+from qnca.optimizers import base, cobyla, cma
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,7 +11,8 @@ dispositivo = 'GPU' if torch.cuda.is_available() else 'CPU'
 
 DIRETORIO_PADRAO = 'D:\\Dropbox\\Projetos\\pessoal\\QNCA\\results\\'
 
-experiments = base.QNCAGlobalOptimizer(ca_patterns.rules, cobyla.QNCAOptimizerCOBYLA, path = DIRETORIO_PADRAO)
+#experiments = base.QNCAGlobalOptimizer(ca_patterns.rules, cobyla.QNCAOptimizerCOBYLA, path = DIRETORIO_PADRAO)
+experiments = base.QNCAGlobalOptimizer(ca_patterns.rules, cma.QNCAOptimizerCMA, path = DIRETORIO_PADRAO)
 experiments.global_training()
 
 

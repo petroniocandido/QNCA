@@ -216,3 +216,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+/outcmaes/all_stoppings.json2
+/outcmaes/axlen.dat
+/outcmaes/axlencorr.dat
+/outcmaes/axlenprec.dat
+/outcmaes/fit.dat
+/outcmaes/parameters.json2
+/outcmaes/sigvec.dat
+/outcmaes/stddev.dat
+/outcmaes/stoppings.json2
+/outcmaes/version.txt
+/outcmaes/x0.dat
+/outcmaes/xmean.dat
+/outcmaes/xrecentbest.dat
