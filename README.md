@@ -33,6 +33,37 @@ In case you have any questions, do not hesitate in contact us using the followin
 
 - Learning the shared circuit parameters is a challenge task due the iterative and recursive nature of the Cellular Automata. An annology for this complexity is to think that the same parameters are repeated verticully (among each set of neighbor qubits) and repated horizontally, for each iteration of the algorithm.
 
+### Algorithn
+  - Given:
+    - $U_{i+1, i, i-1}(\theta)$ - Transition function parameterized  circuit
+      - The circuit uses cell qubits $t-1$ and $t+1$ as control qubits and ancilla qubit $i+n$ as target
+      - The employs [Universal Rotation Gates](https://quantum.cloud.ibm.com/docs/en/api/qiskit/qiskit.circuit.library.UGate) $U_t(\alpha, \beta, \gamma)$ and [Controlled Universal Rotation gates](https://quantum.cloud.ibm.com/docs/en/api/qiskit/qiskit.circuit.library.CUGate) $CU_{c,t}(\alpha, \beta, \gamma)$, where the parameters $t$ is the targe qubit index, $c$ is the control qubit index, and $\theta = \{\alpha, \beta, \gamma\}$ are trainable parameters referent to the [ZYZ Euler Rotation Angles](https://en.wikipedia.org/wiki/Euler_angles).
+      - $U_{i+1, i, i-1}(\theta) =$
+        - $CU_{i,i+n}(\theta_1, \theta_2,\theta_3)$
+        - $ \otimes\; CU_{i-1\%n,i+n}(\theta_4, \theta_5,\theta_6)$
+        - $ \otimes\; CU_{i-1\%n,i+n}(\theta_7, \theta_8,\theta_9)$  
+        - $ \otimes\; U_{i+n}(\theta_{10}, \theta_{11},\theta_{12})$  
+        - $ \otimes\; CU_{i-1\%n,i+n}(\theta_{13}, \theta_{14},\theta_{15})$  
+        - $ \otimes\; CU_{i+1\%n,i+n}(\theta_{16}, \theta_{17},\theta_{18})$  
+    - $S = \{0,1\}^n$ - Initial state configuration
+    - $T \in \mathbb{N}^+$ - Number of iterations
+  - Execute:
+    1. Setup circuit with n cell qubits and n ancilla qubits
+       - The cell qubits store the current state (at time $t$) and the ancilla qubits store the next state (of time $t+1$)
+       - $|\psi⟩ = |0⟩^{\otimes 2n}$
+    2. Configure initial state S
+       - $|\psi⟩ = \bigotimes_{i=1}^n RX_i(2\pi s_i)|\psi⟩$
+    3. For t = 1...T:
+       - Evolve $|\psi⟩$ with the transition circuit  
+         - $|\psi⟩ = \bigotimes_{i=1}^n U_{i+1, i, i-1}(\theta)|\psi⟩$
+       - Swap the ancillas with the cells qubits
+         - $|\psi⟩ = \bigotimes_{i=1}^n SWAP_{i+n, i}|\psi⟩$
+       - Reset the ancilla qubits
+         - $|\psi⟩ = \bigotimes_{i=n+1}^{2n} |0⟩_i|\psi⟩$
+    4. Read Out
+       - For i = 1...n:
+         - $out_i  = ∠_i |\psi⟩$
+
 - For an $n$-grid 1D cellular automata with 2-cell neighborhood and T iterations, the $\theta$ will contains a fixed number of 18 parameters, but the circuit will contain $2n$ qubits of width and length of $O(9nT)$.
 
 
