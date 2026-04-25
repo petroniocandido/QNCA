@@ -8,7 +8,7 @@ import pandas as pd
 import torch
 import json
 import os
-from .qnca import QNCA
+from ..qnca import QNCA
 
 class QNCAOptimizer(object):
   def __init__(self, **kwargs):
@@ -76,8 +76,9 @@ class QNCAGlobalOptimizer(object):
     self.patterns = patterns
     self.optimizer = optimizer
     self.kwargs = kwargs
-    self.file_path = DIRETORIO_PADRAO + "{}.json".format(optimizer.name)
-    self.finetunning_file_path = DIRETORIO_PADRAO + "{}-finetunning.json".format(optimizer.name)
+    self.path = kwargs.get('path', '')
+    self.file_path = self.path + "{}.json".format(optimizer.name)
+    self.finetunning_file_path = self.path + "{}-finetunning.json".format(optimizer.name)
     self.resume = kwargs.get('resume',True)
     
     self.history = {}

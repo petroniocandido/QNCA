@@ -1,3 +1,4 @@
+import numpy as np
 from scipy.optimize import minimize
 from .base import QNCAOptimizer
 
@@ -6,8 +7,9 @@ class QNCAOptimizerCOBYLA(QNCAOptimizer):
   def __init__(self, **kwargs):
     super(QNCAOptimizerCOBYLA, self).__init__(**kwargs)
 
-  def training_loop(self):
-    parametros = np.random.rand(self.num_param) * (2 * np.pi)
+  def training_loop(self, param = None):
+    
+    parametros = np.random.rand(self.num_param) * (2 * np.pi) if param is None else param
 
     objetivo = lambda x: self.funcao_custo(x)
 
