@@ -41,10 +41,10 @@ In case you have any questions, do not hesitate in contact us using the followin
       - $U_{i+1, i, i-1}(\theta) =$
         - $CU_{i,i+n}(\theta_1, \theta_2,\theta_3)$
         - $\otimes CU_{i-1\\%n,i+n}(\theta_4, \theta_5,\theta_6)$
-        - $\otimes CU_{i-1\%n,i+n}(\theta_7, \theta_8,\theta_9)$  
+        - $\otimes CU_{i-1\\%n,i+n}(\theta_7, \theta_8,\theta_9)$  
         - $\otimes U_{i+n}(\theta_{10}, \theta_{11},\theta_{12})$  
-        - $\otimes CU_{i-1\%n,i+n}(\theta_{13}, \theta_{14},\theta_{15})$  
-        - $\otimes CU_{i+1\%n,i+n}(\theta_{16}, \theta_{17},\theta_{18})$  
+        - $\otimes CU_{i-1\\%n,i+n}(\theta_{13}, \theta_{14},\theta_{15})$  
+        - $\otimes CU_{i+1\\%n,i+n}(\theta_{16}, \theta_{17},\theta_{18})$  
     - $S = \{0,1\}^n$ - Initial state configuration
     - $T \in \mathbb{N}^+$ - Number of iterations
   - Execute:
