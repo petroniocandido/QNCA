@@ -79,7 +79,7 @@ In case you have any questions, do not hesitate in contact us using the followin
     2. For $t_1 = 1\ldots T$
        1. $shots = \mathbb{0}^{m \times d}$
        2. For $t_2 = 1\ldots m$
-          1. $shots_{t_2} = QNCA(S,t_1,\theta)
+          1. $shots_{t_2} = QNCA(S,t_1,\theta)$
        4. $output_{t_1,\ldots} = \mathbb{E}[(shots)]$
     3. Return $output$
        
