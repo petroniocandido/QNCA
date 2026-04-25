@@ -61,8 +61,8 @@ In case you have any questions, do not hesitate in contact us using the followin
        - Reset the ancilla qubits
          - $|\psi⟩ = \bigotimes_{i=n+1}^{2n} |0⟩_i|\psi⟩$
     4. Read Out
-       - $output \in \{0,1}^{n}$
-       - For i = 1...n:
+       - $output \in \{0,1\}^{n}$
+       - For i = 1\ldots n:
          - $output_i  = ∠_i |\psi⟩$
     6. Return  $output$
 
@@ -70,17 +70,17 @@ In case you have any questions, do not hesitate in contact us using the followin
 
 - Simulation Algoritm
   - Given
-    - $S \in \{0,1}^d$ - Initial state
+    - $S \in \{0,1\}^d$ - Initial state
     - $T \in \mathbb{N}^+$ - Number of simulation iterations
     - $\theta \in \mathbb{R}$ - Parameters
     - $m \in \mathbb{N}^+$ - Number of execution shots
   - Execute
     1. $output = \mathbb{0}^{T\times d}$
-    2. For $t_1 \in [1\ldots T]:$
-       1. $shots = \{\empty\}^{m \times d}$
-       2. For $t_2 \in [1\ldots m]:$
+    2. For $t_1 = 1\ldots T$
+       1. $shots = \mathbb{0}^{m \times d}$
+       2. For $t_2 = 1\ldots m$
           1. $shots_{t_2} = QNCA(S,t_1,\theta)
-       4. $output_{t_1,\ldots} = average(shots)$
+       4. $output_{t_1,\ldots} = \mathbb{E}[(shots)]$
     3. Return $output$
        
 ### GNCA Variational Training
