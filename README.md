@@ -40,7 +40,7 @@ In case you have any questions, do not hesitate in contact us using the followin
       - The employs [Universal Rotation Gates](https://quantum.cloud.ibm.com/docs/en/api/qiskit/qiskit.circuit.library.UGate) $U_t(\alpha, \beta, \gamma)$ and [Controlled Universal Rotation gates](https://quantum.cloud.ibm.com/docs/en/api/qiskit/qiskit.circuit.library.CUGate) $CU_{c,t}(\alpha, \beta, \gamma)$, where the parameters $t$ is the targe qubit index, $c$ is the control qubit index, and $\theta = \{\alpha, \beta, \gamma\}$ are trainable parameters referent to the [ZYZ Euler Rotation Angles](https://en.wikipedia.org/wiki/Euler_angles).
       - $U_{i+1, i, i-1}(\theta) =$
         - $CU_{i,i+n}(\theta_1, \theta_2,\theta_3)$
-        - $\otimes CU_{i-1\%n,i+n}(\theta_4, \theta_5,\theta_6)$
+        - $\otimes CU_{i-1n,i+n}(\theta_4, \theta_5,\theta_6)$
         - $\otimes\; CU_{i-1\%n,i+n}(\theta_7, \theta_8,\theta_9)$  
         - $\otimes\; U_{i+n}(\theta_{10}, \theta_{11},\theta_{12})$  
         - $\otimes\; CU_{i-1\%n,i+n}(\theta_{13}, \theta_{14},\theta_{15})$  
