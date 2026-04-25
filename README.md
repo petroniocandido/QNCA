@@ -88,10 +88,14 @@ In case you have any questions, do not hesitate in contact us using the followin
 - Given
   - $p_{rule} \in \{0,1}^{T\times d}$ - 1D CA Pattern with width $d$ and lenght $T$
   - $m \in \mathbb{N}^+$ - Number of execution shots
-  - $\mathcal{L}(p_{rule}, output) = \sum_{t=1}^T\sum_{i}^d (p_{t,i} - output_{t,i})^2$ - Mean Squared Error loss function
-  - $BBO(\mathcal{L},\theta)$ - Black Box Optimization method 
+  - $\mathcal{L}(p_{rule}, S, \theta, m))$ - Mean Squared Error loss function
+    - $output = SimulateQNCA(S,T,\theta, m)$
+    - $return \sum_{t=1}^T\sum_{i}^d (p_{rule}[t,i] - output[t,i])^2$
+  - $BBO(p_{rule}, S, \theta, m))$ - Black Box Optimization method
+    - \theta' =\arg\min_\theta \mathcal{L}(p_{rule}, S, \theta, m)
 - Execute
   - $\theta_0 \sim \mathcal{U}(0, 2\pi)$
+  - $S = p_{1,\ldots}$ - Initial state
   - $\theta_f = BBO(\mathcal{L},\theta_0)$
   - return $\theta_f$
 
