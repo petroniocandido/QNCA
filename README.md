@@ -33,7 +33,7 @@ In case you have any questions, do not hesitate in contact us using the followin
 
 - Learning the shared circuit parameters is a challenge task due the iterative and recursive nature of the Cellular Automata. An annology for this complexity is to think that the same parameters are repeated verticully (among each set of neighbor qubits) and repated horizontally, for each iteration of the algorithm.
 
-### Algorithn
+### Algorithn $GNCA(S, T, \theta)$
   - Given:
     - $U_{i+1, i, i-1}(\theta)$ - Transition function parameterized  circuit
       - The circuit uses cell qubits $t-1$ and $t+1$ as control qubits and ancilla qubit $i+n$ as target
@@ -48,7 +48,7 @@ In case you have any questions, do not hesitate in contact us using the followin
     - $S = \{0,1\}^n$ - Initial state configuration
     - $T \in \mathbb{N}^+$ - Number of iterations
   - Execute:
-    1. Setup circuit with n cell qubits and n ancilla qubits
+    1. Setup circuit $|\psi⟩$ with n cell qubits and n ancilla qubits
        - The cell qubits store the current state (at time $t$) and the ancilla qubits store the next state (of time $t+1$)
        - $|\psi⟩ = |0⟩^{\otimes 2n}$
     2. Configure initial state S
@@ -61,10 +61,29 @@ In case you have any questions, do not hesitate in contact us using the followin
        - Reset the ancilla qubits
          - $|\psi⟩ = \bigotimes_{i=n+1}^{2n} |0⟩_i|\psi⟩$
     4. Read Out
+       - $output \in \{0,1}^{n}$
        - For i = 1...n:
-         - $out_i  = ∠_i |\psi⟩$
+         - $output_i  = ∠_i |\psi⟩$
+    6. Return  $output$
 
 - For an $n$-grid 1D cellular automata with 2-cell neighborhood and T iterations, the $\theta$ will contains a fixed number of 18 parameters, but the circuit will contain $2n$ qubits of width and length of $O(9nT)$.
 
+- Simulation Algoritm
+  - Given
+    - $S \in \{0,1}^d$ - Initial state
+    - $T \in \mathbib{N}^+$ - Number of simulation iterations
+    - $\theta \in \mathbib{R}$ - Parameters
+    - $m \in \mathbib{N}^+$ - Number of execution shots
+  - Execute
+    1. $output = \mathbb{O}^{T\times d}$
+    2. For $t_1 \in [1\ldots T]:$
+       1. $shots = \{\empty\}^{m \times d}$
+       2. For $t_2 \in [1\ldots m]:$
+          1. $shots_{t_2} = QNCA(S,t_1,\theta)
+       4. $output_{t_1,\ldots} = average(shots)$
+    3. Return $output$
+       
+### GNCA Variational Training
+- With bidimensional time evolution of a unidimensional CA pattern given by $p_{rule} \in \{0,1}^{T\times d}$, where $rule$ refers to the classical set of AC rules, $d$ is the size of unidimensional grid (width), and $T$ is the duration of the time evolution (length), our objective is to generate a similar pattern with a circuit $U_{NCA}(\theta)$ that evolves a state $|\psi\rangle^t$
 
 
