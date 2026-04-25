@@ -95,9 +95,9 @@ In case you have any questions, do not hesitate in contact us using the followin
   - $BBO(p_{rule}, S, \theta, m))$ - Black Box Optimization method    
 - Execute
   - $\theta_0 \sim \mathcal{U}(0, 2\pi)$
-  - $S = p_{1,\ldots}$ - Initial state
+  - $S = p[1,\ldots]$ - Initial state
   - $\theta_f = BBO(\mathcal{L},\theta_0)$
-    - $\theta' =\arg\min_\theta \mathcal{L}(p_{rule}, S, \theta, m)$
+    - $\theta_f =\arg\min_\theta \mathcal{L}(p_{rule}, S, \theta, m)$
   - return $\theta_f$
 
 
