@@ -62,7 +62,7 @@ In case you have any questions, do not hesitate in contact us using the followin
          - $|\psi⟩ = \bigotimes_{i=n+1}^{2n} |0⟩_i|\psi⟩$
     4. Read Out
        - $output \in \{0,1\}^{n}$
-       - For i = 1\ldots n:
+       - For $i = 1\ldots n$:
          - $output_i  = ∠_i |\psi⟩$
     6. Return  $output$
 
@@ -79,8 +79,8 @@ In case you have any questions, do not hesitate in contact us using the followin
     2. For $t_1 = 1\ldots T$
        1. $shots = \mathbb{0}^{m \times d}$
        2. For $t_2 = 1\ldots m$
-          1. $shots_{t_2} = QNCA(S,t_1,\theta)$
-       4. $output_{t_1,\ldots} = \mathbb{E}[shots]$
+          1. $shots[t_2] = QNCA(S,t_1,\theta)$
+       4. $output[t_1,\ldots] = \mathbb{E}[shots]$
     3. Return $output$
        
 ### GNCA Variational Training - $OptimizeQNCA(p,m)$
