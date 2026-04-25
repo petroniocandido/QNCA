@@ -71,11 +71,11 @@ In case you have any questions, do not hesitate in contact us using the followin
 - Simulation Algoritm
   - Given
     - $S \in \{0,1}^d$ - Initial state
-    - $T \in \mathbib{N}^+$ - Number of simulation iterations
-    - $\theta \in \mathbib{R}$ - Parameters
-    - $m \in \mathbib{N}^+$ - Number of execution shots
+    - $T \in \mathbb{N}^+$ - Number of simulation iterations
+    - $\theta \in \mathbb{R}$ - Parameters
+    - $m \in \mathbb{N}^+$ - Number of execution shots
   - Execute
-    1. $output = \mathbb{O}^{T\times d}$
+    1. $output = \mathbb{0}^{T\times d}$
     2. For $t_1 \in [1\ldots T]:$
        1. $shots = \{\empty\}^{m \times d}$
        2. For $t_2 \in [1\ldots m]:$
