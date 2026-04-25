@@ -88,7 +88,7 @@ In case you have any questions, do not hesitate in contact us using the followin
 - Given
   - $p_{rule} \in \{0,1}^{T\times d}$ - 1D CA Pattern with width $d$ and lenght $T$
   - $m \in \mathbb{N}^+$ - Number of execution shots
-  - \mathcal{L}(p_{rule}, output) = \sum_{t=1}^T\sum_{i}^d (p_{t,i} - output_{t,i})^2$ - Mean Squared Error loss function
+  - $\mathcal{L}(p_{rule}, output) = \sum_{t=1}^T\sum_{i}^d (p_{t,i} - output_{t,i})^2$ - Mean Squared Error loss function
   - $BBO(\mathcal{L},\theta)$ - Black Box Optimization method 
 - Execute
   - $\theta_0 \sim \mathcal{U}(0, 2\pi)$
