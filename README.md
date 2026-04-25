@@ -33,7 +33,7 @@ In case you have any questions, do not hesitate in contact us using the followin
 
 - Learning the shared circuit parameters is a challenge task due the iterative and recursive nature of the Cellular Automata. An annology for this complexity is to think that the same parameters are repeated verticully (among each set of neighbor qubits) and repated horizontally, for each iteration of the algorithm.
 
-### Algorithn $GNCA(S, T, \theta)$
+### Neural Cellular Automata Circuit: $GNCA(S, T, \theta)$
   - Given:
     - $U_{i+1, i, i-1}(\theta)$ - Transition function parameterized  circuit
       - The circuit uses cell qubits $t-1$ and $t+1$ as control qubits and ancilla qubit $i+n$ as target
@@ -68,7 +68,7 @@ In case you have any questions, do not hesitate in contact us using the followin
 
 - For an $n$-grid 1D cellular automata with 2-cell neighborhood and T iterations, the $\theta$ will contains a fixed number of 18 parameters, but the circuit will contain $2n$ qubits of width and length of $O(9nT)$.
 
-- Simulation Algoritm
+### Simulation Algoritm - $SimulateQNCA(S,T,\theta, m)$
   - Given
     - $S \in \{0,1\}^d$ - Initial state
     - $T \in \mathbb{N}^+$ - Number of simulation iterations
@@ -83,7 +83,16 @@ In case you have any questions, do not hesitate in contact us using the followin
        4. $output_{t_1,\ldots} = \mathbb{E}[shots]$
     3. Return $output$
        
-### GNCA Variational Training
+### GNCA Variational Training - $OptimizeQNCA(p,m)$
 - With bidimensional time evolution of a unidimensional CA pattern given by $p_{rule} \in \{0,1}^{T\times d}$, where $rule$ refers to the classical set of AC rules, $d$ is the size of unidimensional grid (width), and $T$ is the duration of the time evolution (length), our objective is to generate a similar pattern with a circuit $U_{NCA}(\theta)$ that evolves a state $|\psi\rangle^t$
+- Given
+  - $p_{rule} \in \{0,1}^{T\times d}$ - 1D CA Pattern with width $d$ and lenght $T$
+  - $m \in \mathbb{N}^+$ - Number of execution shots
+  - \mathcal{L}(p_{rule}, output) = \sum_{t=1}^T\sum_{i}^d (p_{t,i} - output_{t,i})^2$ - Mean Squared Error loss function
+  - $BBO(\mathcal{L},\theta)$ - Black Box Optimization method 
+- Execute
+  - $\theta_0 \sim \mathcal{U}(0, 2\pi)$
+  - $\theta_f = BBO(\mathcal{L},\theta_0)$
+  - return $\theta_f$
 
 
