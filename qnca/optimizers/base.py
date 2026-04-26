@@ -116,8 +116,14 @@ class QNCAGlobalOptimizer(object):
 
   def k_perturbed_best(self, rule, operator, k, radius = 0.1):
     bp = self.history[rule][operator]['best_param']
-    m = len(bp)
-    return (np.random.randn(k,m) * radius) + bp
+    if k == 1:
+      return bp 
+    else:
+      m = len(bp)
+      tmp = ((np.random.randn(k-1,m) * radius) + bp).tolist()
+      tmp.insert(0,bp)
+    
+      return tmp
 
 
   def fine_tunning(self, k = 1):

@@ -25,7 +25,7 @@ class QNCAOptimizerGA(QNCAOptimizer):
   def funcao_custo(self, parametros):
     return [super().funcao_custo(parametros)]
 
-  def training_loop(self):
+  def training_loop(self, param = None):
 
     objetivo = lambda x: self.funcao_custo(x)
 
@@ -34,18 +34,17 @@ class QNCAOptimizerGA(QNCAOptimizer):
     # an Individual is a list with one more attribute called fitness
     creator.create("Individual", list, fitness=creator.FitnessMin)
 
-    # instance of Toolbox class
     toolbox = base.Toolbox()
+    
+    if param is None:
 
-    # Attribute generator, generation function
-    # toolbox.attr_bool(), when called, will draw a random integer between 0 and 1
-    # it is equivalent to random.randint(0,1)
-    toolbox.register("attr_float", random.uniform, 0, 2*np.pi)
+      toolbox.register("attr_float", random.uniform, 0, 2*np.pi)
+      toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_float, self.num_param)
+      toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+      pop = toolbox.population(n=self.population_size)
 
-    # here give the no. of bits in an individual i.e. size_of_individual, here 100
-    # depends upon decoding strategy, which uses precision
-    toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_float, self.num_param)
-    toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+    else: 
+      pop = [creator.Individual(ind) for ind in param]
 
     toolbox.register("evaluate", objetivo) # privide the objective function here
 
@@ -57,7 +56,7 @@ class QNCAOptimizerGA(QNCAOptimizer):
     # Elitism
     hall_of_fame = tools.HallOfFame(1)
 
-    pop = toolbox.population(n=self.population_size)
+    
 
     # The next thing to do is to evaluate our brand new population.
 
