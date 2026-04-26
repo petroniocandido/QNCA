@@ -33,22 +33,22 @@ In case you have any questions, do not hesitate in contact us using the followin
 
 - Learning the shared circuit parameters is a challenge task due the iterative and recursive nature of the Cellular Automata. An annology for this complexity is to think that the same parameters are repeated verticully (among each set of neighbor qubits) and repated horizontally, for each iteration of the algorithm.
 
-### Algorithn
+### Neural Cellular Automata Circuit: $GNCA(S, T, \theta)$
   - Given:
     - $U_{i+1, i, i-1}(\theta)$ - Transition function parameterized  circuit
       - The circuit uses cell qubits $t-1$ and $t+1$ as control qubits and ancilla qubit $i+n$ as target
       - The employs [Universal Rotation Gates](https://quantum.cloud.ibm.com/docs/en/api/qiskit/qiskit.circuit.library.UGate) $U_t(\alpha, \beta, \gamma)$ and [Controlled Universal Rotation gates](https://quantum.cloud.ibm.com/docs/en/api/qiskit/qiskit.circuit.library.CUGate) $CU_{c,t}(\alpha, \beta, \gamma)$, where the parameters $t$ is the targe qubit index, $c$ is the control qubit index, and $\theta = \{\alpha, \beta, \gamma\}$ are trainable parameters referent to the [ZYZ Euler Rotation Angles](https://en.wikipedia.org/wiki/Euler_angles).
       - $U_{i+1, i, i-1}(\theta) =$
         - $CU_{i,i+n}(\theta_1, \theta_2,\theta_3)$
-        - $ \otimes\; CU_{i-1\%n,i+n}(\theta_4, \theta_5,\theta_6)$
-        - $ \otimes\; CU_{i-1\%n,i+n}(\theta_7, \theta_8,\theta_9)$  
-        - $ \otimes\; U_{i+n}(\theta_{10}, \theta_{11},\theta_{12})$  
-        - $ \otimes\; CU_{i-1\%n,i+n}(\theta_{13}, \theta_{14},\theta_{15})$  
-        - $ \otimes\; CU_{i+1\%n,i+n}(\theta_{16}, \theta_{17},\theta_{18})$  
+        - $\otimes CU_{i-1\\%n,i+n}(\theta_4, \theta_5,\theta_6)$
+        - $\otimes CU_{i-1\\%n,i+n}(\theta_7, \theta_8,\theta_9)$  
+        - $\otimes U_{i+n}(\theta_{10}, \theta_{11},\theta_{12})$  
+        - $\otimes CU_{i-1\\%n,i+n}(\theta_{13}, \theta_{14},\theta_{15})$  
+        - $\otimes CU_{i+1\\%n,i+n}(\theta_{16}, \theta_{17},\theta_{18})$  
     - $S = \{0,1\}^n$ - Initial state configuration
     - $T \in \mathbb{N}^+$ - Number of iterations
   - Execute:
-    1. Setup circuit with n cell qubits and n ancilla qubits
+    1. Setup circuit $|\psi⟩$ with n cell qubits and n ancilla qubits
        - The cell qubits store the current state (at time $t$) and the ancilla qubits store the next state (of time $t+1$)
        - $|\psi⟩ = |0⟩^{\otimes 2n}$
     2. Configure initial state S
@@ -61,10 +61,43 @@ In case you have any questions, do not hesitate in contact us using the followin
        - Reset the ancilla qubits
          - $|\psi⟩ = \bigotimes_{i=n+1}^{2n} |0⟩_i|\psi⟩$
     4. Read Out
-       - For i = 1...n:
-         - $out_i  = ∠_i |\psi⟩$
+       - $output \in \{0,1\}^{n}$
+       - For $i = 1\ldots n$:
+         - $output_i  = ∠_i |\psi⟩$
+    6. Return  $output$
 
 - For an $n$-grid 1D cellular automata with 2-cell neighborhood and T iterations, the $\theta$ will contains a fixed number of 18 parameters, but the circuit will contain $2n$ qubits of width and length of $O(9nT)$.
 
+### Simulation Algoritm - $SimulateQNCA(S,T,\theta, m)$
+  - Given
+    - $S \in \{0,1\}^d$ - Initial state
+    - $T \in \mathbb{N}^+$ - Number of simulation iterations
+    - $\theta \in \mathbb{R}$ - Parameters
+    - $m \in \mathbb{N}^+$ - Number of execution shots
+  - Execute
+    1. $output = \mathbb{0}^{T\times d}$
+    2. For $t_1 = 1\ldots T$
+       1. $shots = \mathbb{0}^{m \times d}$
+       2. For $t_2 = 1\ldots m$
+          1. $shots[t_2] = QNCA(S,t_1,\theta)$
+       4. $output[t_1,\ldots] = \mathbb{E}[shots]$
+    3. Return $output$
+       
+### GNCA Variational Training - $OptimizeQNCA(p,m)$
+- With bidimensional time evolution of a unidimensional CA pattern given by $p_{rule} \in \{0,1}^{T\times d}$, where $rule$ refers to the classical set of AC rules, $d$ is the size of unidimensional grid (width), and $T$ is the duration of the time evolution (length), our objective is to generate a similar pattern with a circuit $U_{NCA}(\theta)$ that evolves a state $|\psi\rangle^t$
+- Given
+  - $p_{rule} \in \{0,1}^{T\times d}$ - 1D CA Pattern with width $d$ and lenght $T$
+  - $m \in \mathbb{N}^+$ - Number of execution shots
+  - $\mathcal{L}(p_{rule}, S, \theta, m))$ - Mean Squared Error loss function
+    - $output = SimulateQNCA(S,T,\theta, m)$
+    - $mse = \sum_{t=1}^T\sum_{i}^d (p_{rule}[t,i] - output[t,i])^2$
+    - return $mse$
+  - $BBO(p_{rule}, S, \theta, m))$ - Black Box Optimization method    
+- Execute
+  - $\theta_0 \sim \mathcal{U}(0, 2\pi)$
+  - $S = p[1,\ldots]$ - Initial state
+  - $\theta_f = BBO(\mathcal{L},\theta_0)$
+    - $\theta_f =\arg\min_\theta \mathcal{L}(p_{rule}, S, \theta, m)$
+  - return $\theta_f$
 
 
