@@ -1,6 +1,7 @@
 from deap import base
 from deap import creator
 from deap import tools
+import numpy as np
 import random
 
 from .base import QNCAOptimizer
