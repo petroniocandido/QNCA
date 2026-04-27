@@ -24,6 +24,9 @@ dependencies = [
   "cma"
 ]
 
+[tool.setuptools.packages.find]
+include = ["qnca"] 
+
 [project.urls]
 Homepage = "https://github.com/petroniocandido/QNCA/"
 Issues = "https://github.com/petroniocandido/QNCA/issues"
