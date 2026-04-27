@@ -9,7 +9,7 @@ class QNCAOptimizerCOBYLA(QNCAOptimizer):
 
   def training_loop(self, param = None):
     
-    parametros = np.random.rand(self.num_param) * (2 * np.pi) if param is None else param[0]
+    parametros = np.random.rand(self.num_param) * (2 * np.pi) if param is None else param
 
     objetivo = lambda x: self.funcao_custo(x)
 

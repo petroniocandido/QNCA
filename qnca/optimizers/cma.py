@@ -10,7 +10,7 @@ class QNCAOptimizerCMA(QNCAOptimizer):
     self.popsize = kwargs.get('population', 15)
 
   def training_loop(self, param = None):
-    parametros = [np.pi/2] * self.num_param  if param is None else param[0]
+    parametros = [np.pi/2] * self.num_param  if param is None else param
 
     objetivo = lambda x: self.funcao_custo(x)
 
