@@ -88,16 +88,12 @@ In case you have any questions, do not hesitate in contact us using the followin
 - Given
   - $p_{rule} \in \{0,1}^{T\times d}$ - 1D CA Pattern with width $d$ and lenght $T$
   - $m \in \mathbb{N}^+$ - Number of execution shots
-  - $\mathcal{L}(p_{rule}, S, \theta, m))$ - Mean Squared Error loss function
-    - $output = SimulateQNCA(S,T,\theta, m)$
-    - $mse = \sum_{t=1}^T\sum_{i}^d (p_{rule}[t,i] - output[t,i])^2$
-    - return $mse$
-  - $BBO(p_{rule}, S, \theta, m))$ - Black Box Optimization method    
+  - $T \in \mathbb{N}^+$ - Number of simulation iterations
 - Execute
   - $\theta_0 \sim \mathcal{U}(0, 2\pi)$
   - $S = p[1,\ldots]$ - Initial state
-  - $\theta_f = BBO(\mathcal{L},\theta_0)$
-    - $\theta_f =\arg\min_\theta \mathcal{L}(p_{rule}, S, \theta, m)$
+  - $\mathcal{L}(p_{rule}, S, \theta, m)) = \frac{1}{Td}\sum_{t=1}^T\sum_{i}^d (p_{rule}[t,i] - SimulateQNCA(S,T,\theta, m)[t,i])^2$ - Mean Squared Error loss function
+  - $\theta_f =\arg\min_\theta \mathcal{L}(p_{rule}, S, \theta, m)$  - Black Box Optimization method 
   - return $\theta_f$
 
 
