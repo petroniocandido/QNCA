@@ -9,7 +9,7 @@ import torch
 import json
 import os
 from qnca.qnca import QNCA
-import qnca.ca_patterns 
+from qnca import ca_patterns 
 
 class QNCAOptimizer(object):
   def __init__(self, **kwargs):
