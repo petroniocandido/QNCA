@@ -67,6 +67,7 @@ In case you have any questions, do not hesitate in contact us using the followin
     6. Return  $output$
 
 - For an $n$-grid 1D cellular automata with 2-cell neighborhood and T iterations, the $\theta$ will contains a fixed number of 18 parameters, but the circuit will contain $2n$ qubits of width and length of $O(9nT)$.
+- The execution of $QNCA(S,t,\theta)$ is not deterministic and may result in different output values given the same input values $S,t,\theta$. Then, hereafter executing QNCA will be considered the same as sampling a probability distribution, such as $out \sim QNCA(S,t,\theta)$
 
 ### Simulation Algoritm - $SimulateQNCA(S,T,\theta, m)$
   - Given
@@ -79,7 +80,7 @@ In case you have any questions, do not hesitate in contact us using the followin
     2. For $t_1 = 1\ldots T$
        1. $shots = \mathbb{0}^{m \times d}$
        2. For $t_2 = 1\ldots m$
-          1. $shots[t_2] = QNCA(S,t_1,\theta)$
+          1. $shots[t_2] \sim QNCA(S,t_1,\theta)$
        4. $output[t_1,\ldots] = \mathbb{E}[shots]$
     3. Return $output$
        
@@ -88,16 +89,12 @@ In case you have any questions, do not hesitate in contact us using the followin
 - Given
   - $p_{rule} \in \{0,1}^{T\times d}$ - 1D CA Pattern with width $d$ and lenght $T$
   - $m \in \mathbb{N}^+$ - Number of execution shots
-  - $\mathcal{L}(p_{rule}, S, \theta, m))$ - Mean Squared Error loss function
-    - $output = SimulateQNCA(S,T,\theta, m)$
-    - $mse = \sum_{t=1}^T\sum_{i}^d (p_{rule}[t,i] - output[t,i])^2$
-    - return $mse$
-  - $BBO(p_{rule}, S, \theta, m))$ - Black Box Optimization method    
+  - $T \in \mathbb{N}^+$ - Number of simulation iterations
 - Execute
   - $\theta_0 \sim \mathcal{U}(0, 2\pi)$
   - $S = p[1,\ldots]$ - Initial state
-  - $\theta_f = BBO(\mathcal{L},\theta_0)$
-    - $\theta_f =\arg\min_\theta \mathcal{L}(p_{rule}, S, \theta, m)$
+  - $\mathcal{L}(p_{rule}, S, \theta, m)) = \frac{1}{Td}\sum_{t=1}^T\sum_{i}^d (p_{rule}[t,i] - SimulateQNCA(S,T,\theta, m)[t,i])^2$ - Mean Squared Error loss function
+  - $\theta_f =\arg\min_\theta \mathcal{L}(p_{rule}, S, \theta, m)$  - Black Box Optimization method 
   - return $\theta_f$
 
 
