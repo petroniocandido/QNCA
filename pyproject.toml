@@ -13,6 +13,19 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
+[project]
+dependencies = [
+  "numpy",
+  "matplotlib",
+  "pandas",
+  "qiskit",
+  "qiskit-aer",
+  "pylatexenc",
+  "torch",
+  "deap",
+  "cma"
+]
+
 [project.urls]
 Homepage = "https://github.com/petroniocandido/QNCA/"
 Issues = "https://github.com/petroniocandido/QNCA/issues"
