@@ -67,6 +67,7 @@ In case you have any questions, do not hesitate in contact us using the followin
     6. Return  $output$
 
 - For an $n$-grid 1D cellular automata with 2-cell neighborhood and T iterations, the $\theta$ will contains a fixed number of 18 parameters, but the circuit will contain $2n$ qubits of width and length of $O(9nT)$.
+- The execution of $QNCA(S,t,\theta)$ is not deterministic and may result in different output values given the same input values $S,t,\theta$. Then, hereafter executing QNCA will be considered the same as sampling a probability distribution, such as $out \sim QNCA(S,t,\theta)$
 
 ### Simulation Algoritm - $SimulateQNCA(S,T,\theta, m)$
   - Given
@@ -79,7 +80,7 @@ In case you have any questions, do not hesitate in contact us using the followin
     2. For $t_1 = 1\ldots T$
        1. $shots = \mathbb{0}^{m \times d}$
        2. For $t_2 = 1\ldots m$
-          1. $shots[t_2] = QNCA(S,t_1,\theta)$
+          1. $shots[t_2] \sim QNCA(S,t_1,\theta)$
        4. $output[t_1,\ldots] = \mathbb{E}[shots]$
     3. Return $output$
        
