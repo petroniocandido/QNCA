@@ -9,6 +9,7 @@ import torch
 import json
 import os
 from ..qnca import QNCA
+import ..ca_patterns 
 
 class QNCAOptimizer(object):
   def __init__(self, **kwargs):
@@ -86,6 +87,11 @@ class QNCAGlobalOptimizer(object):
       if os.path.exists(self.file_path):
         with open(self.file_path, 'r') as file:
           self.history = json.load(file)
+
+    self.finetunning = {}
+    if os.path.exists(self.finetunning_file_path):
+        with open(self.finetunning_file_path, 'r') as file:
+          self.finetunning = json.load(file)
       
 
 
@@ -126,11 +132,7 @@ class QNCAGlobalOptimizer(object):
       return tmp
 
 
-  def fine_tunning(self, k = 1):
-    self.finetunning = {}
-    if os.path.exists(self.finetunning_file_path):
-        with open(self.finetunning_file_path, 'r') as file:
-          self.finetunning = json.load(file)
+  def fine_tunning(self, k = 1):    
 
     for rule, pattern in self.patterns.items():
       print("\nRULE {}\n".format(rule))
@@ -234,7 +236,7 @@ class QNCAGlobalOptimizer(object):
 
     if rule is not None and operator is not None:
 
-      r = rules[int(rule)]
+      r = ca_patterns.rules[int(rule)]
 
       param = self.history[rule][operator]['best_param']
       evol = self.sample(np.array(r), int(operator), np.array(param))
@@ -244,7 +246,7 @@ class QNCAGlobalOptimizer(object):
       ax[1].matshow(evol, cmap='Greys')
 
     elif rule is not None:
-      r = rules[int(rule)]
+      r = ca_patterns.rules[int(rule)]
       no = len(QNCA.operators)
       fig, ax = plt.subplots(1,no+1, figsize=(20, 5))
       ax[0].matshow(r, cmap='Greys')
@@ -254,12 +256,12 @@ class QNCAGlobalOptimizer(object):
         self._plot_outputs_axis(ax[ct+1], rule, r, op)
 
     else:
-      nr = len(rules)
+      nr = len(ca_patterns.rules)
       no = len(QNCA.operators)
       fig, ax = plt.subplots(nr,no+1, figsize=(20, 2*nr))
 
-      for ct1, rule in enumerate(rules.keys()):
-        r = rules[rule]
+      for ct1, rule in enumerate(ca_patterns.rules.keys()):
+        r = ca_patterns.rules[rule]
         ax[ct1, 0].matshow(r, cmap='Greys')
         ax[ct1, 0].set_title("Pattern {}".format(rule))
         for ct2, op in enumerate(QNCA.operators):
