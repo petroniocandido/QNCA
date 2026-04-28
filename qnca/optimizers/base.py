@@ -48,8 +48,22 @@ class QNCAOptimizer(object):
       self.best_param = param.tolist()
       print("NEW MIN: {}\t{}".format(self.min_loss, self.best_param))
 
-  def funcao_custo(self, parametros):
+  def output(self, parametros):
     evolution = np.zeros((self.T,self.n))
+    for t in range(self.T-1):
+      qc = QNCA(operator = self.operator, initial=self.initial, T = t+1, backend = self.backend, parametros = parametros)
+
+      job = self.backend.run(qc.final_circuit, shots=self.shots)
+      counts = job.result().get_counts()
+
+      statistics = {k: {d : 0 for d in ['0','1']} for k in range(self.n)}
+      for output, count in counts.items():
+        for ix, d in enumerate(reversed(output)):
+          statistics[ix][d] += count
+
+
+
+  def funcao_custo(self, parametros):   
 
     mse = 0.0
 
