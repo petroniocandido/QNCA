@@ -66,10 +66,16 @@ In case you have any questions, do not hesitate in contact us using the followin
          - $output_i  = ∠_i |\psi⟩$
     6. Return  $output$
 
-- For an $n$-grid 1D cellular automata with 2-cell neighborhood and T iterations, the $\theta$ will contains a fixed number of 18 parameters, but the circuit will contain $2n$ qubits of width and length of $O(9nT)$.
-- The execution of $QNCA(S,t,\theta)$ is not deterministic and may result in different output values given the same input values $S,t,\theta$. Then, hereafter executing QNCA will be considered the same as sampling a probability distribution, such as $out \sim QNCA(S,t,\theta)$
+- For an $n$-grid 1D cellular automata with 2-cell neighborhood and T iterations, the $\theta$ will contain a fixed number of 18 parameters, but the circuit will contain $2n$ qubits of width and length of $O(9nT)$.
+- The execution of $QNCA(S,T,\theta)$ is not deterministic and may result in different output values given the same input values $S,t,\theta$.
+  - Then, hereafter executing QNCA will be considered the same as sampling a probability distribution, such as $out \sim QNCA(S,T,\theta)$
+  - Yet more, given an initial state $S$ of dimension $d$ and a parameter set $\theta$, for $T = 1$, $m$ samples of $QNCA(S,T,\theta)$ can generate $2^d$ different patterns, with different probabilities according to $U_{i+1, i, i-1}(\theta)$. Then, for greater values of $T$, these outputs and their uncertainties propagate for each iteration
+  - Each row in the generated pattern of $QNCA(S,T,\theta)$ is the expected value of $m$ samples
 
 ### Simulation Algoritm - $SimulateQNCA(S,T,\theta, m)$
+- The simulation algorithm was projected with the objective of producing the average time evolution of $m$ samples from QNCA given a set of parameters $S,T,\theta$, instead of a single sample.
+- For a time length $T$, the algorithm will iterate over $t = 1\ldots T$ producing circuit versions $QNCA(S,t,\theta)$, and each version is sampled $m$ times for producing the average cellular automaton evolution for $T = t$, given the initial condition $S$ and parameters $\theta$.
+- The output pattern is a matrix $O_{S,\theta} \in [0,1]^{T \times d}$, where each column represents one of the $d$ cells of the unidimensional grid, and the rows represent the states of each cell for a given iteration $t = 1\ldots T$. The value of each cell falls in the interval $[0,1]$ that averages the amounts of 0's and 1's sampled during the $m$ executions.
   - Given
     - $S \in \{0,1\}^d$ - Initial state
     - $T \in \mathbb{N}^+$ - Number of simulation iterations
@@ -83,17 +89,19 @@ In case you have any questions, do not hesitate in contact us using the followin
           1. $shots[t_2] \sim QNCA(S,t_1,\theta)$
        4. $output[t_1,\ldots] = \mathbb{E}[shots]$
     3. Return $output$
+   
+- The simulation process is costly. Let $ C_U$ be the cost (in number of operations) of the circuit, the total GNCA simulation cost in a Quantum Computer is $O(T\cdot m\cdot C_U)$. In classical computing, the number can be exponentially greater.
        
 ### GNCA Variational Training - $OptimizeQNCA(p,m)$
 - With bidimensional time evolution of a unidimensional CA pattern given by $p_{rule} \in \{0,1}^{T\times d}$, where $rule$ refers to the classical set of AC rules, $d$ is the size of unidimensional grid (width), and $T$ is the duration of the time evolution (length), our objective is to generate a similar pattern with a circuit $U_{NCA}(\theta)$ that evolves a state $|\psi\rangle^t$
+- Given a simulation output $O_{GNCA} = SimulateQNCA(S,T,\theta, m)$, The chosen loss function is the cell-wise Mean Squared Error given by $\mathcal{L}(p_{rule}, S, \theta, m)) = \frac{1}{Td}\sum_{t=1}^T\sum_{i}^d (p_{rule}[t,i] - O_{GNCA}[t,i])^2$
 - Given
-  - $p_{rule} \in \{0,1}^{T\times d}$ - 1D CA Pattern with width $d$ and lenght $T$
+  - $p_{rule} \in \{0,1\}^{T\times d}$ - 1D CA Pattern with width $d$ and lenght $T$
   - $m \in \mathbb{N}^+$ - Number of execution shots
   - $T \in \mathbb{N}^+$ - Number of simulation iterations
 - Execute
   - $\theta_0 \sim \mathcal{U}(0, 2\pi)$
   - $S = p[1,\ldots]$ - Initial state
-  - $\mathcal{L}(p_{rule}, S, \theta, m)) = \frac{1}{Td}\sum_{t=1}^T\sum_{i}^d (p_{rule}[t,i] - SimulateQNCA(S,T,\theta, m)[t,i])^2$ - Mean Squared Error loss function
   - $\theta_f =\arg\min_\theta \mathcal{L}(p_{rule}, S, \theta, m)$  - Black Box Optimization method 
   - return $\theta_f$
 

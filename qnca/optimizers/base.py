@@ -8,8 +8,8 @@ import pandas as pd
 import torch
 import json
 import os
-from ..qnca import QNCA
-import ..ca_patterns 
+from qnca.qnca import QNCA
+from qnca import ca_patterns 
 
 class QNCAOptimizer(object):
   def __init__(self, **kwargs):
