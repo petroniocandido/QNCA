@@ -66,7 +66,7 @@ In case you have any questions, do not hesitate in contact us using the followin
          - $output_i  = ∠_i |\psi⟩$
     6. Return  $output$
 
-- For an $n$-grid 1D cellular automata with 2-cell neighborhood and T iterations, the $\theta$ will contains a fixed number of 18 parameters, but the circuit will contain $2n$ qubits of width and length of $O(9nT)$.
+- For an $n$-grid 1D cellular automata with 2-cell neighborhood and T iterations, the $\theta$ will contain a fixed number of 18 parameters, but the circuit will contain $2n$ qubits of width and length of $O(9nT)$.
 - The execution of $QNCA(S,T,\theta)$ is not deterministic and may result in different output values given the same input values $S,t,\theta$.
   - Then, hereafter executing QNCA will be considered the same as sampling a probability distribution, such as $out \sim QNCA(S,T,\theta)$
   - Yet more, given an initial state $S$ of dimension $d$ and a parameter set $\theta$, for $T = 1$, $m$ samples of $QNCA(S,T,\theta)$ can generate $2^d$ different patterns, with different probabilities according to $U_{i+1, i, i-1}(\theta)$. Then, for greater values of $T$, these outputs and their uncertainties propagate for each iteration
@@ -89,6 +89,8 @@ In case you have any questions, do not hesitate in contact us using the followin
           1. $shots[t_2] \sim QNCA(S,t_1,\theta)$
        4. $output[t_1,\ldots] = \mathbb{E}[shots]$
     3. Return $output$
+   
+- The simulation process is costly. Let $ C_U$ be the cost (in number of operations) of the circuit, the total GNCA simulation cost in a Quantum Computer is $O(T\cdot m\cdot C_U)$. In classical computing, the number can be exponentially greater.
        
 ### GNCA Variational Training - $OptimizeQNCA(p,m)$
 - With bidimensional time evolution of a unidimensional CA pattern given by $p_{rule} \in \{0,1}^{T\times d}$, where $rule$ refers to the classical set of AC rules, $d$ is the size of unidimensional grid (width), and $T$ is the duration of the time evolution (length), our objective is to generate a similar pattern with a circuit $U_{NCA}(\theta)$ that evolves a state $|\psi\rangle^t$
