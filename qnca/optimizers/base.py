@@ -50,6 +50,7 @@ class QNCAOptimizer(object):
 
   def output(self, parametros):
     evolution = np.zeros((self.T,self.n))
+
     for t in range(self.T-1):
       qc = QNCA(operator = self.operator, initial=self.initial, T = t+1, backend = self.backend, parametros = parametros)
 
@@ -61,9 +62,33 @@ class QNCAOptimizer(object):
         for ix, d in enumerate(reversed(output)):
           statistics[ix][d] += count
 
+      for i in range(self.n):
+        evolution[t,i] = np.sum([int(k) * v for k,v in statistics[i].items()])/self.shots
 
+    return evolution
+
+
+  def mse(self, pattern2):
+    mse = 0.0
+
+    for t in range(self.T-1):
+      for i in range(self.n):
+        mse += (self.pattern[t+1,i] - pattern2[t,i])**2
+
+    return mse
+  
 
   def funcao_custo(self, parametros):   
+
+    out = self.output(parametros)
+    error = self.mse(out)
+    self.log(error, parametros)
+
+    return error
+
+
+
+  def funcao_custo2(self, parametros):   
 
     mse = 0.0
 
