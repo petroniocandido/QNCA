@@ -133,6 +133,27 @@ class QNCAGlobalOptimizer(object):
           self.finetunning = json.load(file)
       
 
+  def grid_search(self):
+    for rule, pattern in self.patterns.items():
+      print("\nRULE {}\n".format(rule))
+      krule = str(rule)
+      if not krule in self.history:
+        self.history[krule] = {}
+      for operator in [k for k in QNCA.operators if k < 30]:
+        koperator = str(operator)
+        if self.resume and koperator in self.history[krule]:
+          continue
+        print("\tOPERATOR {}\n".format(operator))
+        self.history[krule][koperator] = {}
+
+        optm = self.optimizer(pattern = np.array(pattern), operator = operator, **self.kwargs)
+        optm.training_loop()
+
+        self.history[krule][koperator]['loss_history'] = optm.loss_history
+        self.history[krule][koperator]['param_history'] = optm.param_history                
+
+        with open(self.file_path, "w") as outfile:
+          json.dump(self.history, outfile)
 
   def global_training(self):
 
