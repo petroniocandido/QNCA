@@ -54,104 +54,105 @@ class QNCA(object):
     for i in self.ix:
       self.qc.cx(i, i+self.n)
       self.qc.crx(self.p[0], (i+1)%self.n, i+self.n)
-      self.qc.crx(self.p[1], (i+1)%self.n, i+self.n)
+      self.qc.crx(self.p[1], (i-1)%self.n, i+self.n)
 
   def unitary_operator_22(self):
     for i in self.ix:
       self.qc.cx(i, i+self.n)
       self.qc.cry(self.p[0], (i+1)%self.n, i+self.n)
-      self.qc.cry(self.p[1], (i+1)%self.n, i+self.n)
+      self.qc.cry(self.p[1], (i-1)%self.n, i+self.n)
 
   def unitary_operator_30(self):
     for i in self.ix:
       self.qc.cx(i, i+self.n)
       self.qc.crx(self.p[0], (i+1)%self.n, i+self.n)
-      self.qc.crx(self.p[1], (i+1)%self.n, i+self.n)
+      self.qc.crx(self.p[1], (i-1)%self.n, i+self.n)
       self.qc.rx(self.p[2], i+self.n)
 
   def unitary_operator_31(self):
     for i in self.ix:
       self.qc.cx(i, i+self.n)
       self.qc.cry(self.p[0], (i+1)%self.n, i+self.n)
-      self.qc.cry(self.p[1], (i+1)%self.n, i+self.n)
+      self.qc.cry(self.p[1], (i-1)%self.n, i+self.n)
       self.qc.ry(self.p[2], i+self.n)
 
   def unitary_operator_32(self):
     for i in self.ix:
       self.qc.crx(self.p[0], i, i+self.n)
       self.qc.crx(self.p[1], (i+1)%self.n, i+self.n)
-      self.qc.crx(self.p[2], (i+1)%self.n, i+self.n)
+      self.qc.crx(self.p[2], (i-1)%self.n, i+self.n)
 
   def unitary_operator_33(self):
     for i in self.ix:
       self.qc.cry(self.p[0], i, i+self.n)
       self.qc.cry(self.p[1], (i+1)%self.n, i+self.n)
-      self.qc.cry(self.p[2], (i+1)%self.n, i+self.n)
+      self.qc.cry(self.p[2], (i-1)%self.n, i+self.n)
 
   def unitary_operator_41(self):
     for i in self.ix:
       self.qc.crx(self.p[0], i, i+self.n)
       self.qc.crx(self.p[1], (i+1)%self.n, i+self.n)
-      self.qc.crx(self.p[2], (i+1)%self.n, i+self.n)
+      self.qc.crx(self.p[2], (i-1)%self.n, i+self.n)
       self.qc.rx(self.p[3], i+self.n)
 
   def unitary_operator_42(self):
     for i in self.ix:
       self.qc.crx(self.p[0], i, i+self.n)
       self.qc.crx(self.p[1], (i+1)%self.n, i+self.n)
-      self.qc.crx(self.p[2], (i+1)%self.n, i+self.n)
+      self.qc.crx(self.p[2], (i-1)%self.n, i+self.n)
       self.qc.ry(self.p[3], i+self.n)
 
   def unitary_operator_43(self):
     for i in self.ix:
       self.qc.cry(self.p[0], i, i+self.n)
       self.qc.cry(self.p[1], (i+1)%self.n, i+self.n)
-      self.qc.cry(self.p[2], (i+1)%self.n, i+self.n)
+      self.qc.cry(self.p[2], (i-1)%self.n, i+self.n)
       self.qc.ry(self.p[3], i+self.n)
 
   def unitary_operator_60(self):
     for i in self.ix:
       self.qc.cx(i, i+self.n)
       self.qc.cu(self.p[0], self.p[1], self.p[2], 0, (i+1)%self.n, i+self.n)
-      self.qc.cu(self.p[3], self.p[4], self.p[5], 0, (i+1)%self.n, i+self.n)
+      self.qc.cu(self.p[3], self.p[4], self.p[5], 0, (i-1)%self.n, i+self.n)
+
 
   def unitary_operator_91(self):
     for i in self.ix:
       self.qc.cx(i, i+self.n)
       self.qc.cu(self.p[0], self.p[1], self.p[2], 0, (i+1)%self.n, i+self.n)
-      self.qc.cu(self.p[3], self.p[4], self.p[5], 0, (i+1)%self.n, i+self.n)
+      self.qc.cu(self.p[3], self.p[4], self.p[5], 0, (i-1)%self.n, i+self.n)
       self.qc.u(self.p[6], self.p[7], self.p[8], i+self.n)
 
   def unitary_operator_92(self):
     for i in self.ix:
       self.qc.cu(self.p[0], self.p[1], self.p[2], 0, i, i+self.n)
       self.qc.cu(self.p[3], self.p[4], self.p[5], 0, (i+1)%self.n, i+self.n)
-      self.qc.cu(self.p[6], self.p[7], self.p[8], 0, (i+1)%self.n, i+self.n)
+      self.qc.cu(self.p[6], self.p[7], self.p[8], 0, (i-1)%self.n, i+self.n)
 
   def unitary_operator_120(self):
     for i in self.ix:
       self.qc.cu(self.p[0], self.p[1], self.p[2], 0, i, i+self.n)
       self.qc.cu(self.p[3], self.p[4], self.p[5], 0, (i+1)%self.n, i+self.n)
-      self.qc.cu(self.p[6], self.p[7], self.p[8], 0, (i+1)%self.n, i+self.n)
+      self.qc.cu(self.p[6], self.p[7], self.p[8], 0, (i-1)%self.n, i+self.n)
       self.qc.u(self.p[9], self.p[10], self.p[11], i+self.n)
 
   def unitary_operator_150(self):
     for i in self.ix:
       self.qc.cx(i, i+self.n)
       self.qc.cu(self.p[0], self.p[1], self.p[2], 0, (i+1)%self.n, i+self.n)
-      self.qc.cu(self.p[3], self.p[4], self.p[5], 0, (i+1)%self.n, i+self.n)
+      self.qc.cu(self.p[3], self.p[4], self.p[5], 0, (i-1)%self.n, i+self.n)
       self.qc.u(self.p[6], self.p[7], self.p[8], i+self.n)
       self.qc.cu(self.p[9], self.p[10], self.p[11], 0, (i+1)%self.n, i+self.n)
-      self.qc.cu(self.p[12], self.p[13], self.p[14], 0, (i+1)%self.n, i+self.n)
+      self.qc.cu(self.p[12], self.p[13], self.p[14], 0, (i-1)%self.n, i+self.n)
 
   def unitary_operator_180(self):
     for i in self.ix:
       self.qc.cu(self.p[0], self.p[1], self.p[2], 0, i, i+self.n)
       self.qc.cu(self.p[3], self.p[4], self.p[5], 0, (i+1)%self.n, i+self.n)
-      self.qc.cu(self.p[6], self.p[7], self.p[8], 0, (i+1)%self.n, i+self.n)
+      self.qc.cu(self.p[6], self.p[7], self.p[8], 0, (i-1)%self.n, i+self.n)
       self.qc.u(self.p[9], self.p[10], self.p[11], i+self.n)
       self.qc.cu(self.p[12], self.p[13], self.p[14], 0, (i+1)%self.n, i+self.n)
-      self.qc.cu(self.p[15], self.p[16], self.p[17], 0, (i+1)%self.n, i+self.n)
+      self.qc.cu(self.p[15], self.p[16], self.p[17], 0, (i-1)%self.n, i+self.n)
 
   def build_circuit(self):
     self.init()
