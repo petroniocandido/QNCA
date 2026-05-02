@@ -7,3 +7,4 @@ pylatexenc
 torch
 deap
 cma
+qiskit_algorithms
